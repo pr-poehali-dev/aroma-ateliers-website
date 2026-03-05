@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useStore } from '@/store/useStore';
 import Icon from '@/components/ui/icon';
 
@@ -14,6 +14,20 @@ export default function Header() {
   const { currentPage, setPage, setCategory, getCartCount, setCartOpen, cartOpen, wishlist, editMode, toggleEditMode } = useStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const cartCount = getCartCount();
+  const clickCount = useRef(0);
+  const clickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleLogoClick = () => {
+    handleNav('home');
+    clickCount.current += 1;
+    if (clickTimer.current) clearTimeout(clickTimer.current);
+    if (clickCount.current >= 5) {
+      toggleEditMode();
+      clickCount.current = 0;
+    } else {
+      clickTimer.current = setTimeout(() => { clickCount.current = 0; }, 1500);
+    }
+  };
 
   const handleNav = (page: string, category?: string) => {
     setPage(page);
@@ -29,7 +43,7 @@ export default function Header() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <button
-              onClick={() => handleNav('home')}
+              onClick={handleLogoClick}
               className="flex flex-col items-start hover-underline group"
             >
               <span className="font-display text-xl md:text-2xl font-light tracking-widest text-graphite uppercase">
@@ -82,13 +96,6 @@ export default function Header() {
                     {cartCount}
                   </span>
                 )}
-              </button>
-              <button
-                onClick={toggleEditMode}
-                title={editMode ? 'Выйти из режима редактирования' : 'Редактировать сайт'}
-                className={`p-2 transition-colors ${editMode ? 'text-gold' : 'text-warm-gray hover:text-graphite'}`}
-              >
-                <Icon name={editMode ? 'PencilOff' : 'Pencil'} size={18} />
               </button>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
