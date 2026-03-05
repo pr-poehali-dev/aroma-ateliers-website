@@ -8,9 +8,10 @@ import ProductPage from '@/pages/ProductPage';
 import CheckoutPage from '@/pages/CheckoutPage';
 import ProfilePage from '@/pages/ProfilePage';
 import AdminPage from '@/pages/AdminPage';
+import Icon from '@/components/ui/icon';
 
 export default function Index() {
-  const { currentPage } = useStore();
+  const { currentPage, editMode, toggleEditMode } = useStore();
 
   const isProduct = currentPage.startsWith('product-');
   const productId = isProduct ? parseInt(currentPage.replace('product-', '')) : null;
@@ -34,6 +35,16 @@ export default function Index() {
   return (
     <div className="min-h-screen flex flex-col bg-cream">
       <Header />
+      {editMode && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-graphite text-cream px-5 py-3 shadow-xl rounded-sm animate-fade-in">
+          <Icon name="Pencil" size={14} className="text-gold" />
+          <span className="font-sans text-xs tracking-widest uppercase">Режим редактирования</span>
+          <span className="text-warm-gray font-sans text-xs">— нажмите на текст или фото чтобы изменить</span>
+          <button onClick={toggleEditMode} className="ml-2 text-warm-gray hover:text-cream transition-colors">
+            <Icon name="X" size={14} />
+          </button>
+        </div>
+      )}
       <main className="flex-1">
         {renderPage()}
       </main>

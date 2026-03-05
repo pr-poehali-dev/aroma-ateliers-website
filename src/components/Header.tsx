@@ -11,7 +11,7 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
-  const { currentPage, setPage, setCategory, getCartCount, setCartOpen, cartOpen, wishlist } = useStore();
+  const { currentPage, setPage, setCategory, getCartCount, setCartOpen, cartOpen, wishlist, editMode, toggleEditMode } = useStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const cartCount = getCartCount();
 
@@ -82,6 +82,13 @@ export default function Header() {
                     {cartCount}
                   </span>
                 )}
+              </button>
+              <button
+                onClick={toggleEditMode}
+                title={editMode ? 'Выйти из режима редактирования' : 'Редактировать сайт'}
+                className={`p-2 transition-colors ${editMode ? 'text-gold' : 'text-warm-gray hover:text-graphite'}`}
+              >
+                <Icon name={editMode ? 'PencilOff' : 'Pencil'} size={18} />
               </button>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}

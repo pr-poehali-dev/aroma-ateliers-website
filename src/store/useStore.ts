@@ -79,6 +79,10 @@ interface StoreState {
   addProduct: (product: Omit<Product, 'id'>) => void;
   updateProduct: (id: number, data: Partial<Product>) => void;
   deleteProduct: (id: number) => void;
+
+  // Edit mode
+  editMode: boolean;
+  toggleEditMode: () => void;
 }
 
 const BOURBON_VANILLA_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/bucket/7b886d5d-befe-4363-81e7-8166652c1b04.jpg';
@@ -380,6 +384,10 @@ export const useStore = create<StoreState>()(
         products: get().products.map(p => p.id === id ? { ...p, ...data } : p)
       }),
       deleteProduct: (id) => set({ products: get().products.filter(p => p.id !== id) }),
+
+      // Edit mode
+      editMode: false,
+      toggleEditMode: () => set({ editMode: !get().editMode }),
     }),
     {
       name: 'aroma-atelier-store',

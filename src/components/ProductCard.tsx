@@ -1,5 +1,6 @@
 import { useStore, Product } from '@/store/useStore';
 import Icon from '@/components/ui/icon';
+import EditableImage from '@/components/EditableImage';
 
 interface Props {
   product: Product;
@@ -7,7 +8,7 @@ interface Props {
 }
 
 export default function ProductCard({ product, onView }: Props) {
-  const { addToCart, toggleWishlist, isInWishlist, setPage } = useStore();
+  const { addToCart, toggleWishlist, isInWishlist, setPage, updateProduct } = useStore();
   const inWishlist = isInWishlist(product.id);
 
   const handleView = () => {
@@ -49,13 +50,13 @@ export default function ProductCard({ product, onView }: Props) {
       </button>
 
       {/* Image */}
-      <div className="overflow-hidden bg-milk aspect-[3/4] cursor-pointer" onClick={handleView}>
-        <img
-          src={product.image}
-          alt={product.name}
-          className="product-img w-full h-full object-cover"
-        />
-      </div>
+      <EditableImage
+        src={product.image}
+        alt={product.name}
+        onChange={(url) => updateProduct(product.id, { image: url, images: [url] })}
+        className="overflow-hidden bg-milk aspect-[3/4] cursor-pointer"
+        imgClassName="product-img w-full h-full object-cover"
+      />
 
       {/* Info */}
       <div className="pt-4 pb-2">

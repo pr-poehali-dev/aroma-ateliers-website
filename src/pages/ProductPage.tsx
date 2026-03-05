@@ -1,13 +1,15 @@
 import { useStore, Product } from '@/store/useStore';
 import ProductCard from '@/components/ProductCard';
 import Icon from '@/components/ui/icon';
+import EditableText from '@/components/EditableText';
+import EditableImage from '@/components/EditableImage';
 
 interface Props {
   productId: number;
 }
 
 export default function ProductPage({ productId }: Props) {
-  const { products, addToCart, toggleWishlist, isInWishlist, setPage } = useStore();
+  const { products, addToCart, toggleWishlist, isInWishlist, setPage, updateProduct } = useStore();
   const product = products.find(p => p.id === productId);
   const related = products.filter(p => p.id !== productId && p.category === product?.category).slice(0, 4);
   const inWishlist = product ? isInWishlist(product.id) : false;
@@ -43,18 +45,14 @@ export default function ProductPage({ productId }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
           {/* Images */}
           <div>
-            <div className="aspect-square bg-milk overflow-hidden">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-            </div>
-            {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-2 mt-2">
-                {product.images.map((img, i) => (
-                  <div key={i} className="aspect-square bg-milk overflow-hidden cursor-pointer border-2 border-transparent hover:border-gold transition-colors">
-                    <img src={img} alt="" className="w-full h-full object-cover" />
-                  </div>
-                ))}
-              </div>
-            )}
+            <EditableImage
+              src={product.image}
+              alt={product.name}
+              onChange={(url) => updateProduct(product.id, { image: url, images: [url] })}
+              className="aspect-square bg-milk overflow-hidden"
+              imgClassName="w-full h-full object-cover"
+            />
+            
           </div>
 
           {/* Info */}
@@ -72,9 +70,12 @@ export default function ProductPage({ productId }: Props) {
             <p className="font-sans text-[10px] tracking-ultra uppercase text-warm-gray mb-2">
               {getCategoryLabel(product.category)}
             </p>
-            <h1 className="font-serif text-3xl md:text-4xl font-light text-graphite leading-tight mb-4">
-              {product.name}
-            </h1>
+            <EditableText
+              as="h1"
+              value={product.name}
+              onChange={(val) => updateProduct(product.id, { name: val })}
+              className="font-serif text-3xl md:text-4xl font-light text-graphite leading-tight mb-4"
+            />
 
             <div className="flex items-center gap-3 mb-6">
               <span className="font-serif text-3xl text-graphite">{product.price.toLocaleString('ru-RU')} ₽</span>
@@ -87,9 +88,13 @@ export default function ProductPage({ productId }: Props) {
 
             <div className="gold-line mb-6" />
 
-            <p className="font-sans text-sm text-warm-gray leading-relaxed mb-8">
-              {product.description}
-            </p>
+            <EditableText
+              as="p"
+              value={product.description}
+              onChange={(val) => updateProduct(product.id, { description: val })}
+              multiline
+              className="font-sans text-sm text-warm-gray leading-relaxed mb-8"
+            />
 
             {/* Notes */}
             <div className="mb-6">
