@@ -81,11 +81,16 @@ interface StoreState {
   deleteProduct: (id: number) => void;
 }
 
-const CANDLE_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/files/6fbfb9f0-2f24-468e-8ea2-829c56a38fe9.jpg';
-const DIFFUSER_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/files/afb93eb9-a51b-4ac9-a77b-229935e1f99d.jpg';
-const GIFT_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/files/40aec317-12e1-49b7-9639-9edaafa01cd4.jpg';
-const SPRING_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/files/4ab82c3e-982e-4d43-825b-ef0c41fcd209.jpg';
-const CAR_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/files/ac4b93a8-db35-4438-aa9a-8411a8bfaebc.jpg';
+const BOURBON_VANILLA_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/bucket/7b886d5d-befe-4363-81e7-8166652c1b04.jpg';
+const BACCARAT_ROUGE_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/bucket/51a48d3d-e1eb-4479-99af-8d4fb06f552e.JPG';
+const PEONY_SUEDE_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/bucket/4e7106bc-9631-40b0-8b10-90349c1b9ada.jpg';
+const MANDARINE_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/bucket/1e631638-d48e-4abd-934b-c3eab7b065a9.JPG';
+const STRAWBERRY_IMG = 'https://cdn.poehali.dev/projects/23c853e5-11a8-499d-a01d-8924ecd92d41/bucket/954b36b2-4793-4330-bbf2-a1dc7c6518a1.jpg';
+const CANDLE_IMG = BOURBON_VANILLA_IMG;
+const DIFFUSER_IMG = BACCARAT_ROUGE_IMG;
+const GIFT_IMG = PEONY_SUEDE_IMG;
+const SPRING_IMG = MANDARINE_IMG;
+const CAR_IMG = STRAWBERRY_IMG;
 
 const initialProducts: Product[] = [
   {
